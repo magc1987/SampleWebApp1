@@ -3,10 +3,33 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<div class="container">
-    <input asp-for="Person.LastName" />
+<div id="sample" class="container">
+    <form method="post">
+        <table id="mytable" class="table table-bordered table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th><label asp-for="Person.FirstName"></label></th>
+                    <th><label asp-for="Person.LastName"></label></th>
+                    <th><label asp-for="Person.FullName"></label></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <input asp-for="Persons[0].LastName" />
+            @{ for (int i = 0; i < Model.Persons.Count; i++)
+                {            
+                    <tr>
+                        <input type="hidden" name="Persons.Index" value="@i" />
+                        <td><input asp-for="Persons[i].FirstName" /></td>
+                        <td><input asp-for="Persons[i].LastName" /></td>
+                        <td><input asp-for="Persons[i].FullName" /></td>
+                        <td><button name="delete" type="button">Remove</button></td>
+                    </tr>                   
+                }
+            }
+        </table>
+        <button type="submit" asp-page-handler="Post">Save</button>
+    </form>
 </div>
-data target
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -97,3 +120,20 @@ data target
         </ul>
     </div>
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#mytable").on("click", "button[name='delete']", function () {
+                alert("hi");
+                $(this).closest("tr").remove();
+
+            })
+
+
+        })
+
+    </script>
+
+}
