@@ -1,0 +1,15 @@
+{
+  "name": "jqwidgets",
+  "homepage": "https://github.com/jqwidgets/jQWidgets",
+  "version": "6.0.6",
+  "_release": "6.0.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v6.0.6",
+    "commit": "d47b1b8f7b1b5d386d483f9d468e4fadfa14f534"
+  },
+  "_source": "https://github.com/jqwidgets/jQWidgets.git",
+  "_target": "v6.0.6",
+  "_originalSource": "jqwidgets",
+  "_direct": true
+}
