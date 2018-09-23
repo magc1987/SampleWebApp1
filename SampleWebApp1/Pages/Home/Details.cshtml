@@ -1,0 +1,78 @@
+﻿@page
+@model SampleWebApp1.Pages.Home.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Patient</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patient.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patient.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.MiddleName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patient.MiddleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.BirthDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patient.BirthDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Patient.PatientId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+<div id="Admissions">
+    <h4>Admissions</h4>
+    <table id="admissiontable" class="table table-borderless table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Order Number
+                </th>
+                <th>
+                    <label asp-for="Patient.Admissions[0].AdmissionDate"></label>
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{for (int i = 0; i < Model.Patient.Admissions.Count; i++)
+                { 
+                    <tr>
+                        <td>
+                            <p>@i</p>
+                        </td>
+                        <td>
+                            <p>@Model.Patient.Admissions[i].AdmissionDate</p>
+                        </td>
+                        <td>
+                            <a asp-page="/Home/Admissions/Admission" asp-route-id="@Model.Patient.Admissions[0].AdmissionId">View</a>>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

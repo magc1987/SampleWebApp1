@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace SampleWebApp1
 {
@@ -35,6 +36,9 @@ namespace SampleWebApp1
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddRazorPagesOptions(options => {
                 options.Conventions.AddPageRoute("/Home", "Default");
             });
+
+            services.AddDbContext<SampleWebApp1.Data.SampleContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("localsql")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

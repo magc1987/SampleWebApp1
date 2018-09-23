@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SampleWebApp1.Model
 {
-    public class Person
+    public class Patient
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PersonId { get; set; }
+        public int PatientId { get; set; }
         
         [Required(ErrorMessage ="Please Input a First Name"), Display(Name ="First Name")]
         public string FirstName { get; set; }
@@ -22,7 +22,8 @@ namespace SampleWebApp1.Model
         public string MiddleName { get; set; }
 
         [DataType(DataType.Date)]
-        [Required(ErrorMessage ="Please Input a Birth Date"), DisplayFormat(DataFormatString ="{0:MM-DD-YYYY}", ApplyFormatInEditMode =true)]
+        [Required(ErrorMessage ="Please Input a Birth Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
 
         public string FullName
@@ -47,8 +48,8 @@ namespace SampleWebApp1.Model
             }
         }
 
-
-        public IEnumerable<Order> Orders { get; set; }
+        //navigation property
+        public IList<Admission> Admissions { get; set; }
 
     }
 }

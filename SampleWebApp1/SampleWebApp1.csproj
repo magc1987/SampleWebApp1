@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180921095511_initial.cs" />
+    <Compile Remove="Migrations\20180921095511_initial.Designer.cs" />
+    <Compile Remove="Migrations\20180921095753_initial.cs" />
+    <Compile Remove="Migrations\20180921095753_initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bower" Version="1.3.11" />
     <PackageReference Include="DependencyTracker.LibManReader" Version="1.2.2" />
     <PackageReference Include="jQWidgets.AspNetCore.Mvc.Bootstrap.TagHelpers" Version="2.0.0" />
