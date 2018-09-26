@@ -34,7 +34,7 @@ namespace SampleWebApp1
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddRazorPagesOptions(options => {
-                options.Conventions.AddPageRoute("/Home", "Default");
+
             });
 
             services.AddDbContext<SampleWebApp1.Data.SampleContext>(options =>

@@ -18,6 +18,16 @@ namespace SampleWebApp1.Model
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OrderDate { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedDate { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime LastModified { get; set; }
+
+        public int Position { get; set; }
+
         //navigation property
         public int AdmissionId { get; set; }
         public Admission Admissions { get; set; }

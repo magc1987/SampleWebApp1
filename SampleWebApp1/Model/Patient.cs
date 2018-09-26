@@ -26,6 +26,14 @@ namespace SampleWebApp1.Model
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedDate { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime LastModified { get; set; }
+
         public string FullName
         {
             get

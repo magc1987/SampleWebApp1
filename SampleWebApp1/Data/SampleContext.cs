@@ -17,5 +17,18 @@ namespace SampleWebApp1.Data
         public DbSet<Admission> Admissions { get; set; }
         public DbSet<ItemOrderDetail> ItemOrderDetails { get; set; }
         public DbSet<Supply> Supplies { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //set default value for created data column for tables below
+            modelBuilder.Entity<Patient>().Property(p => p.CreatedDate).HasDefaultValueSql("getdate()");
+            modelBuilder.Entity<Admission>().Property(p => p.CreatedDate).HasDefaultValueSql("getdate()");
+            modelBuilder.Entity<ItemOrderDetail>().Property(p => p.CreatedDate).HasDefaultValueSql("getdate()");
+
+            //set database enerated value for lastupdate column for tables below
+            modelBuilder.Entity<Patient>().Property(p => p.LastModified).HasComputedColumnSql("getdate()");
+            modelBuilder.Entity<Admission>().Property(p => p.LastModified).HasComputedColumnSql("getdate()");
+            modelBuilder.Entity<ItemOrderDetail>().Property(p => p.LastModified).HasComputedColumnSql("getdate()");
+        }
     }
 }

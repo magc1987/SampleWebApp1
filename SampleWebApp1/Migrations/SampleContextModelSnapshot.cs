@@ -27,6 +27,14 @@ namespace SampleWebApp1.Migrations
 
                     b.Property<DateTime>("AdmissionDate");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasComputedColumnSql("getdate()");
+
                     b.Property<int>("PatientId");
 
                     b.HasKey("AdmissionId");
@@ -44,9 +52,19 @@ namespace SampleWebApp1.Migrations
 
                     b.Property<int>("AdmissionId");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasComputedColumnSql("getdate()");
+
                     b.Property<DateTime>("OrderDate");
 
                     b.Property<int>("OrderQuantity");
+
+                    b.Property<int>("Position");
 
                     b.Property<int>("SupplyID");
 
@@ -67,8 +85,16 @@ namespace SampleWebApp1.Migrations
 
                     b.Property<DateTime>("BirthDate");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
+
                     b.Property<string>("FirstName")
                         .IsRequired();
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasComputedColumnSql("getdate()");
 
                     b.Property<string>("LastName")
                         .IsRequired();

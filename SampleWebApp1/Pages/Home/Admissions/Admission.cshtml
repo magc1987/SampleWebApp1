@@ -8,73 +8,103 @@
 
 <h1>Admission</h1>
 <div class="form-group">
-    <label asp-for="Admission.Patients.FullName"></label>
-    <p>@Model.Admission.Patients.FullName</p>
+    <input type="text" id="forgery" />
 </div>
 
 
 <form id="OrderList" method="post">
-<div class="container-fluid">
-    <table id="SupplyTable" class="table table-borderless table-hover">
-        <thead>
-            <tr>
-                <th>Supply Number</th>
-                <th>Supply ID</th>
-                <th>Order Date</th>
-                <th>Order Description</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{ 
-                for (int i = 0; i < Model.Admission.ItemOrderDetails.Count; i++)
-                {
-                    <tr>
-                        <td>
-                            <input type="text" hidden="hidden" name="Admission.ItemOrderDetails.Index" 
-                                   value="@i" /> 
-                                   @i
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" asp-for="Admission.ItemOrderDetails[i].OrderDetailID" />
-                            <input type="hidden" asp-for="Admission.ItemOrderDetails[0].AdmissionId" />
-                        </td>
-                        <td>
-                            <input type="text" asp-for="Admission.ItemOrderDetails[i].OrderDate" class="form-control" />
-                        </td>
-                        <td>
-                            <input type="text" asp-for="Admission.ItemOrderDetails[i].Supplies.SupplyName" class="form-control" />
-                            <select asp-for="Admission.ItemOrderDetails[i].SupplyID" class="select2-single" asp-items="Model.selectListItems">
-                            </select>
-                        </td>
-                        <td>
-                            <input type="text" asp-for="Admission.ItemOrderDetails[i].Supplies.SupplyUnitPrice" class="form-control" />
-                        </td>
-                        <td>
-                            <input type="text" asp-for="Admission.ItemOrderDetails[i].OrderQuantity" class="form-control" />
-                        </td>
-                        <td>
-                            <p>@decimal.Multiply(Model.Admission.ItemOrderDetails[i].OrderQuantity, Convert.ToDecimal(Model.Admission.ItemOrderDetails[i].Supplies.SupplyUnitPrice))</p>
-                        </td>
+    <div class="container-fluid">
+        <input type="hidden" asp-for="Admission.AdmissionId" />
+        <input type ="hidden" asp-for="Admission.AdmissionDate" />
+        <input type="hidden" asp-for="Admission.PatientId" />
+        <table id="SupplyTable" class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th>Supply Number</th>
+                    <th>Supply ID</th>
+                    <th>Order Date</th>
+                    <th>Order Description</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    for (int i = 0; i < Model.Admission.ItemOrderDetails.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" hidden="hidden" name="Admission.ItemOrderDetails.Index"
+                                       value="@i" />
+                                @i
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" asp-for="Admission.ItemOrderDetails[i].OrderDetailID" />
+                            </td>
+                            <td>
+                                <input type="datetime" asp-for="Admission.ItemOrderDetails[i].OrderDate" class="form-control" />
+                            </td>
+                            <td>
+                                <select asp-for="Admission.ItemOrderDetails[i].SupplyID" class="select2-single" asp-items="Model.selectListItems"></select>
+                            </td>
+                            <td>
+                                <input type="text" asp-for="Admission.ItemOrderDetails[i].Supplies.SupplyUnitPrice" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="text" asp-for="Admission.ItemOrderDetails[i].OrderQuantity" class="form-control" />
+                            </td>
+                            <td>
+                                <p>@decimal.Multiply(Model.Admission.ItemOrderDetails[i].OrderQuantity, Convert.ToDecimal(Model.Admission.ItemOrderDetails[i].Supplies.SupplyUnitPrice))</p>
+                            </td>
 
-                    </tr>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-        <tfoot>
+            </tbody>
+            <tfoot>
 
-        </tfoot>
-    </table>
-    <button type="submit" class="btn btn-danger align-items-end">Submit</button>
-</div>
+            </tfoot>
+        </table>
+        <button type="button" id="submit" class="btn btn-danger align-items-end">Submit</button>
+    </div>
 </form>
 
 @section Scripts{ 
     <script type="text/javascript">
         $(document).ready(function () {
             $("select.select2-single").select2();
+            var sortable = $("#SupplyTable").children("tbody");
+            sortable.sortable({
+                revert: true
+             });
+            $("#SupplyTable").children("tbody").children("tr").draggable({
+                containment: "parent",
+                connectToSortable: sortable          
+            })
+
+            $("#forgery").val($("input[name='__RequestVerificationToken']").val());
+            
+
+            
+            $("#submit").on("click", function () {
+
+                var Admission = {
+                    AdmissionDate: "9/10/2018 1:10:00:00 AM",
+                    AdmissionID: 2
+                }
+                
+
+                $.ajax({
+                    type: "POST",
+                    headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                    url: "Admission?Handler=Send",
+                    data: Admission
+                }).done(function (response) {
+                    alert('done')
+                });
+            })
+
 
         })
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -47,8 +48,12 @@ namespace SampleWebApp1.Pages.Home
             }
 
             //_context.Attach(Patient).State = EntityState.Modified;
-            _context.Update(Patient);
+            var patienttoupdate = _context.Patients.Single(s => s.PatientId == Patient.PatientId);
 
+
+
+            if (await TryUpdateModelAsync<Patient>(patienttoupdate, "patient", p => p.LastName, p => p.FirstName, p => p.BirthDate))
+                { 
             try
             {
                 await _context.SaveChangesAsync();
@@ -64,7 +69,7 @@ namespace SampleWebApp1.Pages.Home
                     throw;
                 }
             }
-
+            }
             return RedirectToPage("./Index");
         }
 
